@@ -1,21 +1,16 @@
-from core.settings import COMPONENTS
-
-
 class Entity:
-    _components = {}
+    def __init__(self):
+        self._components = {}
 
-    def add_component(self, component: str) -> None:
-        if component in COMPONENTS:
-            self._components[component] = ...
-        else:
-            raise ValueError(f"Component {component} not found in COMPONENTS")
+    def add_component(self, name: str, component: object) -> None:
+        self._components[name] = component
 
-    def get_component(self, component: str) -> object:
-        component = self._components.get(component)
+    def get_component(self, component_name: str) -> object:
+        component = self._components.get(component_name)
         if component:
             return component
         else:
-            raise ValueError(f"Component {component} not found")
+            raise ValueError(f"Component \"{component_name}\" not found")
 
-    def has_component(self, component: str) -> bool:
-        return component in self._components
+    def has_component(self, component_name: str) -> bool:
+        return component_name in self._components

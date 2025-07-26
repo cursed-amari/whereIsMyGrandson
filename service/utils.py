@@ -91,3 +91,18 @@ def transform_surface(surface: Surface | list[Surface], size: tuple[float, float
         return pygame.transform.smoothscale(surface, size)
     else:
         raise TypeError(f"surface {surface} должен быть либо списком либо Surface")
+
+
+def mirror_surface(surface: Surface | list[Surface]) -> Surface | list[Surface]:
+    if not surface:
+        raise ValueError("Либо список surface пустой, либо surface имеет размеры 0, 0")
+
+    if isinstance(surface, list):
+        if not all(isinstance(surf, Surface) for surf in surface):
+            raise TypeError("Все элементы списка должны быть Surface")
+
+        return [pygame.transform.flip(frame, True, False) for frame in surface]
+    elif isinstance(surface, Surface):
+        return pygame.transform.flip(surface, True, False)
+    else:
+        raise TypeError(f"surface {surface} должен быть либо списком либо Surface")
