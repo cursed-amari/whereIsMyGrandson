@@ -19,7 +19,7 @@ def test_cache_system(tmp_path):
     frames1 = loader.load_tile_map(str(test_file), 3, 1)
     frames2 = loader.load_tile_map(str(test_file), 3, 1)
 
-    assert frames1 is frames2  # Cache check
+    assert frames1 is frames2
     assert len(frames1) == 3
 
 

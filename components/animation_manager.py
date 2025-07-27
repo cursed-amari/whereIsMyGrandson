@@ -1,5 +1,5 @@
 from components.animation import Animation
-from core.settings import ANIMATION_PATH
+from core.settings import ANIMATION_PATH, ENTITY_SIZE
 from service.asset_loader import AssetLoader
 from service.utils import mirror_surface
 
@@ -22,12 +22,12 @@ class AnimationManager:
     def load_all_animations(self) -> None:
         for key, value in ANIMATION_PATH.items():
             if self.state.name in key:
-                self.animation[key] = Animation(AssetLoader().load_tile_map(*value))
+                self.animation[key] = Animation(AssetLoader().load_tile_map(*value, size=ENTITY_SIZE[self.state.name]))
 
     def load_animation(self, state: str) -> None:
         name = self.state.name + "_" + state
-        if name in ANIMATION_PATH:
-            self.animation[name] = Animation(AssetLoader().load_tile_map(*ANIMATION_PATH[name]))
+        if name in ANIMATION_PATH and self.state.name in ENTITY_SIZE:
+            self.animation[name] = Animation(AssetLoader().load_tile_map(*ANIMATION_PATH[name], size=ENTITY_SIZE[self.state.name]))
 
     def create_mirror(self, name: str) -> None:
         self.animation[name+"_mirror"] = Animation(mirror_surface(self.animation[name].frames))
