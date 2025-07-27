@@ -1,5 +1,7 @@
 import os
 
+import pygame
+
 from service.utils import split_tilemap
 
 
@@ -18,18 +20,41 @@ class AssetLoader:
         :param path: Абсолютный путь к tileMap
         :param row: количество строк в tileMap
         :param col: количество колонок в tileMap
-        :return:
+        :return: list[Surface]
         """
 
         if path in self._cache:
             return self._cache[path]
 
-        if os.path.isabs(path):
-            list_surface = split_tilemap(path, row, col)
-            self._cache[path] = list_surface
-            return list_surface
+        if os.path.exists(path):
+            if os.path.isabs(path):
+                list_surface = split_tilemap(path, row, col)
+                self._cache[path] = list_surface
+                return list_surface
+            else:
+                raise ValueError("Требуется абсолютный путь")
         else:
-            raise ValueError("Требуется абсолютный путь")
+            raise ValueError("Путь не найден")
+
+    def load_image(self, path: str) -> pygame.Surface:
+        """
+        Загружает изображение по абсолютному пути
+        :param path: Абсолютный путь к изображению
+        :return: Surface
+        """
+        if path in self._cache:
+            return self._cache[path]
+
+        if os.path.exists(path):
+            if os.path.isabs(path):
+                image = pygame.image.load(path).convert_alpha()
+                self._cache[path] = image
+                return image
+            else:
+                raise ValueError("Требуется абсолютный путь")
+        else:
+            raise ValueError("Путь не найден")
+
 
 
 
