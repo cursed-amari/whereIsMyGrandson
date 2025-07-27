@@ -28,7 +28,16 @@ def test_animation_loading(animation_state, mocker):
         "player_idle": ("idle.png", 1, 1),
         "player_walk": ("walk.png", 1, 1)
     })
-    mocker.patch("service.asset_loader.AssetLoader", MockAssetLoader)
+
+    class MockAssetLoader:
+        def __init__(self):
+            self._cache = {}
+
+        def load_tile_map(self, path: str, row: int, col: int) -> list:
+            return [Surface((10, 10)) for _ in range(row * col)]
+
+    mocker.patch("components.animation_manager.AssetLoader",
+                 return_value=MockAssetLoader())
 
     manager = AnimationManager(animation_state)
     manager.load_all_animations()
@@ -39,10 +48,11 @@ def test_animation_loading(animation_state, mocker):
 
 
 def test_error_handling(animation_state, mocker):
-    mocker.patch("core.settings.ANIMATION_PATH", {})
+    mocker.patch("components.animation_manager.ANIMATION_PATH", {})
     with pytest.raises(ValueError):
         AnimationManager(animation_state)
 
-    manager = AnimationManager(animation_state)
+    mocker.patch("components.animation_manager.ANIMATION_PATH", {})
     with pytest.raises(ValueError):
+        manager = AnimationManager(animation_state)
         manager.get_current_animation()

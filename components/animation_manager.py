@@ -30,11 +30,11 @@ class AnimationManager:
             self.animation[name] = Animation(AssetLoader().load_tile_map(*ANIMATION_PATH[name]))
 
     def create_mirror(self, name: str) -> None:
-        self.animation[name+"_mirror"] = mirror_surface(self.animation[name])
+        self.animation[name+"_mirror"] = Animation(mirror_surface(self.animation[name].frames))
 
     def create_mirror_for_all(self) -> None:
         for key in list(self.animation.keys()):
-            self.animation[key + "_mirror"] = mirror_surface(self.animation[key])
+            self.animation[key + "_mirror"] = Animation(mirror_surface(self.animation[key].frames))
 
     def get_current_animation(self):
         name = self.state.name+"_"+self.state.current_state
