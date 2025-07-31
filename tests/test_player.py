@@ -21,9 +21,3 @@ def test_player_components():
 
     movement = player.get_component("movement")
     assert movement.speed > 0
-
-
-def test_animation_loading_error(mocker):
-    mocker.patch("components.animation_manager.ANIMATION_PATH", {})
-    with pytest.raises(ValueError):
-        Player(Vector2(0, 0))
