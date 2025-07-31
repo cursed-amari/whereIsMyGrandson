@@ -1,5 +1,6 @@
 class Entity:
-    def __init__(self):
+    def __init__(self, entity_type):
+        self.entity_type
         self._components = {}
 
     def add_component(self, name: str, component: object) -> None:

@@ -15,9 +15,8 @@ START_ANIMATION = "idle"
 
 
 class Player(Entity):
-    def __init__(self, pos: Vector2):
-        super().__init__()
-        self.entity_type = "player"
+    def __init__(self, entity_type, pos: Vector2):
+        super().__init__(entity_type)
         
         self.add_component("transform", Transform(pos))
         self.add_component("movement", Movement(PLAYER_SPEED))
