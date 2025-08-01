@@ -1,2 +1,2 @@
 # Project diagram  
-![Diagram](readme_image/projectDiagram.png)
+![Diagram](https://github.com/cursed-amari/whereIsMyGrandson/blob/main/readme_img/projectDiagram.png)
