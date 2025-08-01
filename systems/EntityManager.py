@@ -20,7 +20,6 @@ class EntityManager:
 
         return all_entities
 
-
     def get_all_entities(self) -> list:
         all_entities = []
 
