@@ -9,10 +9,10 @@ class AnimationSystem:
 
     def update(self, entities: list, dt: float):
         for entity in entities:
-            if not entity.has_component(AnimationState) or not entity.has_component(Animation):
+            if not entity.has_component("state") or not entity.has_component("animation"):
                 continue
 
-            anim = entity.get_component(Animation)
+            anim = entity.get_component("animation")
 
             anim.timer += dt * anim.speed
             if anim.timer >= 1 / anim.frame_rate:
