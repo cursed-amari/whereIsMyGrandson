@@ -1,6 +1,6 @@
 from random import random
 
-from pygame import Vector2
+from pygame import Vector2, Rect
 
 from core.settings import (SCREEN_WIDTH,
                            SCREEN_HEIGHT,
@@ -8,7 +8,7 @@ from core.settings import (SCREEN_WIDTH,
                            SCREEN_MAX_ZOOM,
                            SCREEN_MIN_ZOOM,
                            SCREEN_ZOOM_STEP,
-                           SCREEN_SHAKE_FORCE)
+                           SCREEN_SHAKE_FORCE, DRAWING_RANGE)
 from entitys.entity import Entity
 
 
@@ -62,5 +62,17 @@ class CameraSystem:
             )
         else:
             self._current_shake = Vector2(0, 0)
+
+    def get_drawing_rect(self) -> Rect:
+        if not self._target or not self._target.has_component("transform"):
+            return Rect(0, 0, 0, 0)
+
+        center = self._target.get_component("transform").position
+        return Rect(
+            center.x - DRAWING_RANGE,
+            center.y - DRAWING_RANGE,
+            DRAWING_RANGE * 2,
+            DRAWING_RANGE * 2
+        )
 
 
