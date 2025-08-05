@@ -14,7 +14,7 @@ class AnimationSystem:
 
             anim = entity.get_component("animation")
 
-            anim.timer += dt * anim.speed
+            anim.timer += dt * (anim.frame_rate // 2)
             if anim.timer >= 1 / anim.frame_rate:
                 anim.current_frame = (anim.current_frame + 1) % len(anim.frames)
                 anim.timer = 0

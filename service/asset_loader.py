@@ -37,7 +37,7 @@ class AssetLoader:
             else:
                 raise ValueError("Требуется абсолютный путь")
         else:
-            raise ValueError("Путь не найден")
+            raise ValueError(f"Путь не найден: {path}")
 
     def load_image(self, path: str, size: tuple[float, float] = False) -> pygame.Surface:
         """
