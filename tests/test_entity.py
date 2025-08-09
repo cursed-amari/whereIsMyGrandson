@@ -6,7 +6,7 @@ import pytest
 
 
 def test_component_management():
-    entity = Entity()
+    entity = Entity("entity")
     transform = Transform(Vector2(0, 0))
 
     entity.add_component("transform", transform)

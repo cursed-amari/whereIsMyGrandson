@@ -2,11 +2,12 @@ from pygame import Vector2
 from entitys.player import Player
 from components.animation_state import AnimationState
 from components.movement import Movement
+from service.entity_factory import EntityFactory
 import pytest
 
 
 def test_player_components():
-    player = Player(Vector2(0, 0))
+    player = EntityFactory.create_player(Vector2(0, 0))
 
     assert player.has_component("transform")
     assert player.has_component("movement")

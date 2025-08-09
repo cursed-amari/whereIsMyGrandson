@@ -74,5 +74,3 @@ class CameraSystem:
             DRAWING_RANGE * 2,
             DRAWING_RANGE * 2
         )
-
-
