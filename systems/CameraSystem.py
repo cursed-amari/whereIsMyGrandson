@@ -24,6 +24,7 @@ class CameraSystem:
         self.screen_center = Vector2(screen_width // 2, screen_height // 2)
         self.offset = Vector2(0, 0)
         self.current_zoom = SCREEN_ZOOM
+        self.position = Vector2(0, 0)  # позиция камеры в мировых координатах
         self._target = None
         self._smoothness = 0.1
         self._shake_timer = 0
@@ -33,6 +34,7 @@ class CameraSystem:
         if target.has_component("transform"):
             self._target = target
             self._smoothness = smoothness
+            self.position = target.get_component("transform").position.copy()
 
     def zoom_in(self):
         self.current_zoom = min(SCREEN_MAX_ZOOM, self.current_zoom + SCREEN_ZOOM_STEP)
@@ -46,13 +48,19 @@ class CameraSystem:
     def apply_shake(self, duration: float = 0.5):
         self._shake_timer = duration
 
+    def world_to_screen(self, world_pos: Vector2) -> Vector2:
+        return (world_pos - self.position) * self.current_zoom + self.screen_center + self._current_shake
+
+    def screen_to_world(self, screen_pos: Vector2) -> Vector2:
+        return (screen_pos - self.screen_center - self._current_shake) * (1.0 / self.current_zoom) + self.position
+
     def get_final_offset(self) -> Vector2:
         return self.offset + self._current_shake
 
     def update(self, dt: float):
         if self._target and self._target.has_component("transform"):
-            desired_offset = self._target.get_component("transform").position - self.screen_center * (1 / self.current_zoom)
-            self.offset += (desired_offset - self.offset) * self._smoothness
+            target_pos = self._target.get_component("transform").position
+            self.position += (target_pos - self.position) * self._smoothness
 
         if self._shake_timer > 0:
             self._shake_timer -= dt
