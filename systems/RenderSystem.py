@@ -3,7 +3,6 @@ import pygame
 from entitys.entity import Entity
 
 
-##################### Доделать когда будет CameraSystem
 class RenderSystem:
     @staticmethod
     def sort_entities_by_pos(entities: list[Entity]) -> list[Entity]:
